@@ -1,0 +1,73 @@
+{% load class_name %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projet</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+</head>
+<style>
+    body {
+  background: #599fd9;
+  background: -webkit-linear-gradient(to right, #599fd9, #c2e59c);
+  background: linear-gradient(to right, #599fd9, #c2e59c);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+</style>
+<body>
+<div class='row'>
+    <div class='col-12 col-md-6 mx-auto my-5 py-5'>
+    <form method='GET' class='' action='.'>
+
+        <div class="input-group form-group-no-border mx-auto" style="margin-bottom: 0px; font-size: 32px;margin-left:32%">
+            <span class="input-group-addon cfe-nav" style='color:#000'>
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </span>
+            <input type="text" name="q" data-toggle="popover" data-placement="bottom" data-content="Press enter to search" class="form-control cfe-nav mt-0 py-3" placeholder="Search..." value="" style="" data-original-title="" title="" autofocus="autofocus">
+        </div>
+<div class='row title-row my-5'>
+    <div class='col-12 py-0'>
+        <h3 class='my-0 py-0'>{{ count }} results for <b>{{ query }}</b></h3>
+    </div>
+</div>
+{% for object in object_list %}
+    {% with object|class_name as klass %}
+      {% if klass == 'projet' %}
+           <div class='row'>
+             <div class='col-12'>
+                Projet :  <a href="{{ object.get_absolute_url }}">{{ object.title }}</a>
+            </div>
+          </div>
+
+      {% elif klass == 'article' %}
+           <div class='row'>
+             <div class='col-12'>
+                article Item: <a href='{{ object.get_absolute_url }}'>{{ object.title }}</a>
+              </div>
+            </div>
+
+      {% elif klass == 'reclamation' %}
+           <div class='row'>
+                <div class='col-12'>
+                   reclamation Item: <a href='{{ object.get_absolute_url }}'>{{ object.title }}</a>
+                </div>
+            </div>
+      {% else %}
+           <div class='row'>
+             <div class='col-12 col-lg-8 offset-lg-4'>
+                <a href='{{ object.get_absolute_url }}'>{{ object }} | {{ object|class_name }}</a>
+            </div>
+           </div>
+        {% endif %}
+
+    {% endwith %}
+
+{% empty %}
+    </form>
+
+    </div>
+</div>
+{% endfor %}
+</body>
+</html>

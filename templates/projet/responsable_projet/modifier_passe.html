@@ -1,0 +1,151 @@
+{% extends 'mainResponsable.html'%}
+{% load widget_tweaks %}
+{% block contenu %}
+{% load static %}
+
+<!-- Page content holder -->
+<div class="page-content p-5" id="content">
+<div>
+    <div style="position: absolute;right: 10px;top: 20px ;margin-right: 30px;">
+      <img src="{% static 'images/logo-tt-200.png ' %}" alt="" style="margin-top: -10px;height: 100px;">
+    </div>
+               <h1>Profile</h1>
+        <hr>
+    </div>
+  <div class="container">
+<div class="row ">
+	<div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+		<div class="card h-100">
+			<div class="card-body" style="box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.2);">
+				<div class="account-settings">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                {% if responsable.image %}
+            <img src='{{ responsable.image.url }}' width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+
+            {% else %}
+                <img src="https://img.icons8.com/officel/100/000000/user.png"/>
+            {%endif%}                    <div class="mt-3">
+                      <h4 style="text-transform: capitalize;">{{responsable.nom}} {{responsable.prenom}}</h4>
+                      <p class="text-secondary mb-1">responsable</p>
+                      <a class="btn btn-outline-primary" href="{% url 'modifier_profile'  %}">Modifier</a>
+                    </div>
+                  </div>
+                </div>
+				</div>
+			</div>
+		</div>
+	</div>
+<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+		<div class="card h-100">
+			<div class="card-body" style="box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.2);">
+                <div class="row ">
+                <div class="card-body">
+       <form action="" method="POST" novalidate>
+                      {% csrf_token %}
+                    <div class="row ">
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<h6 class="mb-3 text-primary">Changement de mot de passe</h6>
+					</div>
+                    <div class="col-sm-9 text-secondary">
+                        <p>Votre neouveau mot de passe doit respecter les condidtion ci-dessous:
+                        - 6 caractères minimum
+                        -les deux mots de passe doivent être indetique
+                        - Afin de sécuriser votre mot de passe , nous vous conseillons d'utiliser des symbole (@$/!),des minuscules/majuscules ainsi que des chiffres.</p>
+                    </div>
+                         <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Mot de passe actuelle </h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                    {% if form.is_bound %}
+                        {% if form.motDePasse.errors %}
+                          {% render_field form.motDePasse class="form-control is-invalid" %}
+                            {% for error in form.motDePasse.errors %}
+                                <div class="invalid-feedback">
+                                  {{ error }}
+                                </div>
+                            {% endfor %}
+                    {% else %}
+                      {% render_field form.motDePasse class="form-control  type="date" is-valid" %}
+                    {% endif %}
+                  {% else %}
+                    {% render_field form.motDePasse class="form-control" %}
+                  {% endif %}
+                    </div>
+                               <div>
+                       {% if message != "" %}
+
+              <div class="text-danger" style="margin-left:27%" role="alert">
+                 {{message}}
+              </div>
+                        {% endif %}
+
+           </div>
+                  </div>
+
+
+                     <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Nouveau mot de passe</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {% if form.is_bound %}
+                        {% if form.new_password.errors %}
+                          {% render_field form.new_password class="form-control is-invalid" %}
+                            {% for error in form.new_password.errors %}
+                                <div class="invalid-feedback">
+                                  {{ error }}
+                                </div>
+                            {% endfor %}
+                    {% else %}
+                      {% render_field form.new_password class="form-control  type="date" is-valid" %}
+                    {% endif %}
+                  {% else %}
+                    {% render_field form.new_password class="form-control" %}
+                  {% endif %}
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">confirmer le nouveau mot de passe</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {% if form.is_bound %}
+                        {% if form.confirm_password.errors %}
+                          {% render_field form.confirm_password class="form-control is-invalid" %}
+                            {% for error in form.confirm_password.errors %}
+                                <div class="invalid-feedback">
+                                  {{ error }}
+                                </div>
+                            {% endfor %}
+                    {% else %}
+                      {% render_field form.confirm_password class="form-control  type="date" is-valid" %}
+                    {% endif %}
+                  {% else %}
+                    {% render_field form.confirm_password class="form-control" %}
+                  {% endif %}
+                    </div>
+                  </div>
+                    <div class="row gutters">
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<div>
+                            <input class="btn btn-primary" type="submit" value="Changer le mot de passe" style="margin-left:40%">
+                            <a type="button"  name="Annuler" class="btn btn-secondary" href="{% url 'profile_utilisateur'  %}">Annuler</a>
+						</div>
+					</div>
+				</div>
+                    </div>
+                </form>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
+</div>
+  </div>
+    </div>
+<!-- End demo content -->
+	{% endblock %}
+

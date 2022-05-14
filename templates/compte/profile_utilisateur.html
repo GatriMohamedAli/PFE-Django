@@ -1,0 +1,109 @@
+{% extends 'mainAdmin.html'%}
+{% block contenu %}
+{% load static %}
+
+<!-- Page content holder -->
+<div style="position: absolute;top: 20px ;margin-right: 30px;">
+            <img src="{% static 'images/logo-tt-200.png ' %}" alt="" style="margin-top: -10px;height: 100px;">
+        </div>
+<center><h1>Profile </h1></center>
+<hr>
+  <div class="container">
+<div class="row gutters">
+	<div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+		<div class="card h-100">
+			<div class="card-body" style="box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.2);">
+				<div class="account-settings">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+            {% if administrateur.image %}
+            <img src='{{ administrateur.image.url }}' width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+
+            {% else %}
+                <img src="https://img.icons8.com/officel/100/000000/user.png"/>
+            {%endif%}
+                    <div class="mt-3">
+                      <h4 style="text-transform: capitalize;">{{administrateur.nom}} {{administrateur.prenom}}</h4>
+                      <p class="text-secondary mb-1">Administrateur</p>
+                      <a class="btn btn-outline-primary" href="{% url 'modifier_profile' %}">Modifier</a>
+                    </div>
+                  </div>
+                </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+		<div class="card h-100">
+			<div class="card-body" style="box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.2);">
+				<div class="row ">
+                <div class="card-body">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<h6 class="mb-3 text-primary">Info personnelle</h6>
+					</div>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Nom et prénom</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{administrateur.nom}} {{administrateur.prenom}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                    {{administrateur.email}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Telephone</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                    {{administrateur.telephone}}
+
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Adresse</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                    {{administrateur.adresse}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Date de naissance </h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{administrateur.date_naiss}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Rôle</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{administrateur.role}}
+                    </div>
+                  </div>
+
+                </div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+    </div>
+<!-- End demo content -->
+	{% endblock %}

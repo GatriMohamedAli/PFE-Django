@@ -1,0 +1,51 @@
+
+{% extends 'mainChefProjet.html'%}
+{% load static %}
+{% block contenu %}
+<!-- Page content holder -->
+<div class="page-content p-5" id="content">
+    <div>
+        <h1>Ajouter un article </h1>
+        <div style="position: absolute;right: 10px;top: 20px ;margin-right: 30px;">
+            <img src="{% static 'images/logo-tt-200.png ' %}" alt="" style="margin-top: -10px;height: 100px;">
+        </div>
+        <hr>
+    </div>
+
+<div class="container">
+    <div>
+               {% if test == False %}
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                  <strong>Ops!</strong> Vous devriez vérifier le stock de ce produit.
+              </div>
+              {% endif %}
+           </div>
+            <br>
+ <div class="row">
+    <div class="class=col-m3">
+        <div class="card card-body">
+
+           <div style="box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.2);">
+                <div style="height:200px; display: block; margin: 100px auto; width: 400px;">
+                <form action="{% url 'comfirmer_article'  proj=projet.id arti=art.code_article %}" method="POST">
+                    {% csrf_token %}
+                    <h3 style="text-align: center; margin: 50px 0;">Article: {{art.nom_article}}</h3>
+                    <h4 style="text-align: center;">Code: {{art.code_article}}</h4>
+                    <div class="form-floating mb-3">
+                        <input type="number" class="form-control" id="floatingInput" name="number" min=1 value="1">
+                        <label for="floatingInput">Combien?</label>
+                    </div>
+                    <button style="display: block; margin: 50px auto;" class="btn btn-sm btn-primary">Comfirmer</button>
+                </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+</div>
+</div>
+<!-- End demo content -->
+	{% endblock %}

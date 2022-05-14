@@ -1,0 +1,172 @@
+
+{% extends 'mainChefProjet.html'%}
+{% load widget_tweaks %}
+{% load static %}
+{% block contenu %}
+<!-- Page content holder -->
+<div class="page-content p-5" id="content">
+<div class="container">
+<div>
+  <h1>Modifier une tâche </h1>
+  <div style="position: absolute;right: 10px;top: 20px ;margin-right: 30px;">
+    <img src="{% static 'images/logo-tt-200.png ' %}" alt="" style="margin-top: -10px;height: 100px;">
+  </div>
+  <hr>
+</div>
+    <div class="row" >
+	<div class="col-xl-9 col-lg-9 col-md-14 col-sm-14 col-14" style="margin-left:10%;">
+		<div class="card h-100">
+			<div class="card-body" style="box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.2);">
+				<div class="account-settings">
+                <div class="card-body">
+        <form action="" method="POST" >
+            {%  csrf_token %}
+
+            <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Titre de tâche:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {% if form.is_bound %}
+                         {% if form.titre_tache.errors %}
+                          {% render_field form.titre_tache class="form-control is-invalid" %}
+                          {% for error in form.titre_tache.errors %}
+                         <div class="invalid-feedback">
+                          {{ error }}
+                        </div>
+                        {% endfor %}
+                     {% else %}
+                    {% render_field form.titre_tache class="form-control is-valid" %}
+                    {% endif %}
+                    {% else %}
+                    {% render_field form.titre_tache class="form-control" %}
+                    {% endif %}
+                    </div>
+                  </div>
+
+
+
+
+            <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Description de tâche:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {% if form.is_bound %}
+                         {% if form.description_tache.errors %}
+                          {% render_field form.description_tache class="form-control is-invalid" %}
+                          {% for error in form.description_tache.errors %}
+                         <div class="invalid-feedback">
+                          {{ error }}
+                        </div>
+                        {% endfor %}
+                     {% else %}
+                    {% render_field form.description_tache class="form-control is-valid" %}
+                    {% endif %}
+                    {% else %}
+                    {% render_field form.description_tache class="form-control" %}
+                    {% endif %}
+                    </div>
+                  </div>
+
+
+
+
+
+            <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Les mots clés</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {% if form.is_bound %}
+                         {% if form.mots_clés.errors %}
+                          {% render_field form.mots_clés class="form-control is-invalid" %}
+                          {% for error in form.mots_clés.errors %}
+                         <div class="invalid-feedback">
+                          {{ error }}
+                        </div>
+                        {% endfor %}
+                     {% else %}
+                    {% render_field form.mots_clés class="form-control is-valid" %}
+                    {% endif %}
+                    {% else %}
+                    {% render_field form.mots_clés class="form-control" %}
+                    {% endif %}
+                    </div>
+                  </div>
+
+
+
+            <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Démarche tâche:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {% if form.is_bound %}
+                         {% if form.demarche_tache.errors %}
+                          {% render_field form.demarche_tache class="form-control is-invalid" %}
+                          {% for error in form.demarche_tache.errors %}
+                         <div class="invalid-feedback">
+                          {{ error }}
+                        </div>
+                        {% endfor %}
+                     {% else %}
+                    {% render_field form.demarche_tache class="form-control is-valid" %}
+                    {% endif %}
+                    {% else %}
+                    {% render_field form.demarche_tache class="form-control" %}
+                    {% endif %}
+                    </div>
+                  </div>
+
+
+             <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Difficulté tâche:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {% if form.is_bound %}
+                         {% if form.difficulté_tache.errors %}
+                          {% render_field form.difficulté_tache class="form-control is-invalid" %}
+                          {% for error in form.difficulté_tache.errors %}
+                         <div class="invalid-feedback">
+                          {{ error }}
+                        </div>
+                        {% endfor %}
+                     {% else %}
+                    {% render_field form.difficulté_tache class="form-control is-valid" %}
+                    {% endif %}
+                    {% else %}
+                    {% render_field form.difficulté_tache class="form-control" %}
+                    {% endif %}
+                    </div>
+                  </div>
+
+                 <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Nom projet:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <div class="control">
+                            <select class="form-control" name="projet" id="form.projet">
+                                <option value="{{projet.id}}" selected >{{projet.nom_projet}}</option>
+                            </select>
+                        </div>
+                         </div>
+                  </div>
+
+
+            <input class="btn btn-danger" type="submit" name="Valider" style="margin-left:40%">
+            <a class="btn btn-warning" href="{% url 'detaille_projet' proj=projet.id   %}">Annuler</a>
+        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+</div>
+<!-- End demo content -->
+	{% endblock %}

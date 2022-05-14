@@ -1,0 +1,30 @@
+
+{% extends 'mainResponsable.html'%}
+{% block contenu %}
+{% load widget_tweaks %}
+{% load static %}
+<div class="page-content p-5" id="content">
+    <div>
+        <h1>Supprimer projet </h1>
+        <div style="position: absolute;right: 10px;top: 20px ;margin-right: 30px;">
+            <img src="{% static 'images/logo-tt-200.png ' %}" alt="" style="margin-top: -10px;height: 100px;">
+        </div>
+        <hr>
+    </div>
+
+<div class="container" style="margin-left:20%; margin-top:15%;">
+<div class="row">
+<div class="col-md-6">
+    <div class="card card-body">
+        <p>{{message}}</p>
+        <form action="{% url 'supprimer_projet' proj=item.id   %}" method="POST">
+          {% csrf_token %}
+             <a class="btn btn-warning" href="{% url 'liste_Projet'  %}">Annuler</a>
+             <input class="btn btn-danger" type="submit" name="Confirmer">
+        </form>
+    </div>
+</div>
+    </div>
+</div>
+</div>
+	{% endblock %}

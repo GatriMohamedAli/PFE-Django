@@ -1,0 +1,69 @@
+<!--Navbar-->
+{% load static %}
+<div class="vertical-nav bg-white" id="sidebar">
+  <div class="py-4 px-3 mb-4 bg-light">
+    <div class="media d-flex align-items-center">
+
+      {% if administrateur.image %}
+      <img src='{{ administrateur.image.url }}' width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+
+      {% else %}
+      <img src="https://img.icons8.com/officel/100/000000/user.png" />
+      {%endif%}
+      <div class="media-body" style="margin-left:10px ">
+        <h4 class="m-0" style="text-transform: capitalize;">{{administrateur.nom}} {{administrateur.prenom}}</h4>
+        <p class="font-weight-light text-muted mb-0">Administrateur</p>
+        <a class="btn font-weight-light text-muted mb-0" href="{% url 'logout' %}">Déconnexion <i class="fa fa-sign-out"
+            aria-hidden="true"></i></a>
+      </div>
+    </div>
+  </div>
+  <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Activités</p>
+
+  <ul class="nav flex-column bg-white mb-0">
+    <li class="nav-item">
+      <a href="{% url 'profile_utilisateur' %}" class="nav-link text-dark font-italic">
+        <i class="fa fa-picture-o mr-3 text-primary fa-fw"></i>
+        Profile
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="{% url 'Administrateur'%}" class="nav-link text-dark font-italic bg-light">
+        <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
+        Accueil
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="{% url 'listReclamation'  %}" class="nav-link text-dark font-italic">
+        <i class="fa fa-warning mr-3 text-primary fa-fw"></i>
+        Réclamation
+      </a>
+    </li>
+
+  </ul>
+
+  <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">Statistique</p>
+
+  <ul class="nav flex-column bg-white mb-0">
+    <li class="nav-item">
+      <a href="{% url 'statRec'  %}" class="nav-link text-dark font-italic">
+        <i class="fa fa-area-chart mr-3 text-primary fa-fw"></i>
+        Statistique reclamations
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="{% url 'statMag'  %}" class="nav-link text-dark font-italic">
+        <i class="fa fa-bar-chart mr-3 text-primary fa-fw"></i>
+        Statistique Magasin
+      </a>
+    </li>
+    <li class="nav-item">
+      <a href="{% url 'statProj'  %}" class="nav-link text-dark font-italic">
+        <i class="fa fa-pie-chart mr-3 text-primary fa-fw"></i>
+        Statistique Projet
+      </a>
+    </li>
+
+  </ul>
+</div>
+<!--Navbar-->

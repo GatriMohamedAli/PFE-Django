@@ -1,0 +1,114 @@
+{% extends 'mainResponsable.html'%}
+{% block contenu %}
+{% load static %}
+
+<!-- Page content holder -->
+<div class="page-content p-5" id="content">
+<div>
+   <div>
+        <div style="position: absolute;right: 10px;top: 20px ;margin-right: 30px;">
+      <img src="{% static 'images/logo-tt-200.png ' %}" alt="" style="margin-top: -10px;height: 100px;">
+    </div>
+          <h1>Profile</h1>
+
+        <hr>
+    </div>
+  <div class="container">
+<div class="row gutters">
+	<div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+		<div class="card h-100">
+			<div class="card-body" style="box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.2);">
+				<div class="account-settings">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+            {% if responsable.image %}
+            <img src='{{ responsable.image.url }}' width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+
+            {% else %}
+                <img src="https://img.icons8.com/officel/100/000000/user.png"/>
+            {%endif%}
+                    <div class="mt-3">
+                      <h4 style="text-transform: capitalize;">{{responsable.nom}} {{responsable.prenom}}</h4>
+                      <p class="text-secondary mb-1">responsable</p>
+                      <a class="btn btn-outline-primary" href="{% url 'modifier_profile'%}">Modifier</a>
+                    </div>
+                  </div>
+                </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+		<div class="card h-100">
+			<div class="card-body" style="box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.2);">
+				<div class="row ">
+                <div class="card-body">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<h6 class="mb-3 text-primary">Info personnelle</h6>
+					</div>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Nom et prénom</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{responsable.nom}} {{responsable.prenom}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                    {{responsable.email}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Telephone</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                    {{responsable.telephone}}
+
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Adresse</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                    {{responsable.adresse}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Date de naissance </h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{responsable.date_naiss}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Rôle</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{responsable.role}}
+                    </div>
+                  </div>
+
+                </div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</div>
+    </div>
+<!-- End demo content -->
+	{% endblock %}

@@ -1,0 +1,43 @@
+
+      <div class="d-flex flex-wrap" >
+        {% for art in articles %}
+        <div id="{{ art.id }}">
+        <div class="cardd" >
+            <div class="front" >
+             {% if art.image %}
+                     <img src='{{ art.image.url }}' alt="" width=" 240px" height="240px">
+            {% else %}
+                {% load static %}
+                <img src="{% static 'images/carton.jpg' %}"/>
+            {%endif%}
+
+            </div>
+            <div class="back">
+                <div class="back-content">
+                    <div style="width: 200px; height: 160px; border: 1px solid black;">
+                        <div style="margin-top: 5px;"><h4 id="code" >{{art.code_article}}</h4></div>
+                        <div style="width: 160px; height: 160px;margin:0 auto; margin-top: 20px;">
+                            <div>Catégorie:{{art.categorie}}</div>
+                        
+                            <div style="word-wrap: break-word">Déscription:{{art.desc_article}}</div>
+                            <div>Quantité:  {{art.dispo_article}}</div>
+                        </div>
+                    
+
+                    </div>
+                        <div class="d-flex justify-content-around" style="margin-bottom: -50px;" >
+                         <button class="btn btn-warning show-form-update" data-url="{% url 'article_update' art.id %}">
+      
+                        Modifier</button>
+                        <button class="btn btn-danger show-form-delete" data-url="{% url 'article_delete' art.id %}">
+      
+                        Supprimer
+                        </button>
+                        </div>
+
+                </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projet</title>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js"></script>
+    <style>
+        .btn {
+  outline: none;
+  color: black;
+  background-color: transparent;
+  box-shadow: 0 0 0 0;
+}
+.w-60 {
+    width: 100px;
+    height : 100px;
+}
+a {
+    color: #707070;
+}
+.test{
+    height :350px;
+
+}
+
+
+
+.profile {
+    margin-bottom: 25px;
+}
+.profile .jobster-user-info {
+    display: inline-block;
+    width: 100%;
+}
+.profile .jobster-user-info .profile-avatar {
+    position: relative;
+    height: 115px;
+    width: 115px;
+    border-radius: 100%;
+    display: inline-block;
+}
+.profile .jobster-user-info .profile-avatar img {
+    border-radius: 100%;
+}
+.profile .jobster-user-info .profile-avatar i {
+    font-size: 16px;
+    color: #21c87a;
+    position: absolute;
+    background: #ffffff;
+    border-radius: 100%;
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    text-align: center;
+    bottom: 20px;
+    right: -5px;
+}
+
+.about-candidate {
+    padding: 25px 0px;
+}
+.about-candidate .candidate-info {
+    margin-bottom: 20px;
+}
+
+.resume-experience {
+    padding-left: 10px;
+    padding-top: 60px;
+    padding-bottom: 60px;
+    position: relative;
+    padding-right: 50px;
+    background: #f6f6f6;
+}
+.resume-experience:before {
+    position: absolute;
+    left: -40%;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: #f6f6f6;
+    content: "";
+    z-index: -1;
+    top: 0;
+}
+.resume-experience .jobster-candidate-timeline .jobster-timeline-item .jobster-timeline-cricle {
+    border-color: #f6f6f6;
+}
+
+.user-dashboard-info-box .select2-container--default .select2-selection--single .select2-selection__rendered {
+    font-weight: bold;
+    color: #626262;
+}
+
+@media (max-width: 1199px) {
+    .secondary-menu ul li a {
+        padding: 10px 15px;
+    }
+}
+
+@media (max-width: 991px) {
+    .resume-experience {
+        padding-left: 15px;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        padding-right: 15px;
+    }
+    .resume-experience:before {
+        content: none;
+    }
+    .secondary-menu ul li {
+        display: inline-block;
+    }
+}
+
+@media (max-width: 575px) {
+    .secondary-menu ul li a {
+        padding: 4px 8px;
+    }
+}
+
+/*****************************
+    Progress Bar
+*****************************/
+.progress {
+    position: relative;
+    overflow: inherit;
+    height: 3px;
+    margin: 40px 0px 15px;
+    width: 100%;
+    display: inline-block;
+}
+.progress .progress-bar {
+    height: 3px;
+    background: #21c87a;
+}
+.progress .progress-bar-title {
+    position: absolute;
+    left: 0;
+    top: -20px;
+    color: #212529;
+    font-size: 14px;
+    font-weight: 600;
+}
+.progress .progress-bar-number {
+    position: absolute;
+    right: 0;
+    color: #646f79;
+    top: -20px;
+}
+
+
+/* Jobster Candidate */
+.jobster-candidate-timeline {
+    position: relative;
+}
+.jobster-candidate-timeline:before {
+    content: "";
+    position: absolute;
+    left: 20px;
+    width: 2px;
+    top: 5px;
+    bottom: 5px;
+    height: calc(100% - 5px);
+    background-color: #eeeeee;
+}
+
+.jobster-candidate-timeline .jobster-timeline-item {
+    display: table;
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.jobster-candidate-timeline .jobster-timeline-item .jobster-timeline-cricle {
+    border-radius: 50%;
+    border: 12px solid white;
+    z-index: 1;
+    top: 5px;
+    left: 9px;
+    position: absolute;
+}
+.jobster-candidate-timeline .jobster-timeline-item .jobster-timeline-cricle:before {
+    content: "";
+    position: absolute;
+    left: 12px;
+    width: 20px;
+    top: -1px;
+    bottom: 5px;
+    height: 2px;
+    background-color: #eeeeee;
+}
+.jobster-candidate-timeline .jobster-timeline-item .jobster-timeline-cricle > i {
+    font-size: 15px;
+    top: -8px;
+    left: -7px;
+    position: absolute;
+    color: #21c87a;
+}
+
+.jobster-candidate-timeline .jobster-timeline-item .jobster-timeline-info {
+    display: table-cell;
+    vertical-align: top;
+    padding: 5px 0 0 70px;
+}
+.jobster-candidate-timeline .jobster-timeline-item .jobster-timeline-info h6 {
+    color: #21c87a;
+    margin: 5px 0 0px;
+}
+.jobster-candidate-timeline .jobster-timeline-item .jobster-timeline-info span {
+    color: #212529;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.jobster-candidate-timeline span.jobster-timeline-time {
+    color: #646f79 !important;
+}
+
+.jobster-candidate-timeline .jobster-timeline-icon {
+    border: 2px solid #eeeeee;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    line-height: 42px;
+    text-align: center;
+    background: #ffffff;
+    position: relative;
+    margin-bottom: 20px;
+}
+.jobster-candidate-timeline .jobster-timeline-icon i {
+    font-size: 16px;
+    color: #212529;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    top: 16px;
+}
+
+.view {
+position: absolute;left:80%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+* {box-sizing: border-box}
+
+/* Set height of body and the document to 100% */
+body, html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial;
+}
+
+/* Style tab links */
+.tablink {
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  font-size: 17px;
+  width:25%;
+}
+
+.tablink:hover {
+  background-color: #777;
+}
+
+ body {
+      background-image: url('{% static "images/img2.png " %}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: top;
+      background-attachment: fixed;
+    }
+    </style>
+</head>
+<body>
+<div  class="main">
+    {% include 'base/NavbarAdmin.html' %}
+        <div class="page-content p-5" id="content">
+        {% block contenu %}
+
+        </div>
+    {% endblock %}
+</div>
+<h1>Footer</h1>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+</script>
+<script>
+function openPage(pageName,elmnt) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  document.getElementById(pageName).style.display = "block";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+</body>
+</html>

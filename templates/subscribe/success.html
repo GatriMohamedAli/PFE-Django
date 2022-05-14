@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <title>Success</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<style>
+    body {
+        background-image: url('{% static "images/img.png " %}');
+        background-repeat: no-repeat;
+        background-size: 1000px 1000px;
+        background-position: top;
+        background-attachment: fixed;
+
+    }
+
+    .form-control:not(textarea) {
+        height: 44px;
+    }
+
+    .form-control {
+        padding: 0 18px 3px;
+        border: 1px solid #dbe2e8;
+        border-radius: 22px;
+        background-color: #fff;
+        color: #606975;
+        font-family: "Maven Pro", Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+
+    .form-group label {
+        margin-bottom: 8px;
+        padding-left: 18px;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+
+    .form-text {
+        padding-left: 18px;
+    }
+
+    .text-muted {
+        color: #9da9b9 !important;
+    }
+
+    .wrapper {
+        width: 500px;
+        border-radius: 10px;
+        margin: 50px auto;
+        padding: 30px 40px;
+        box-shadow: 20px 20px 80px rgb(206, 206, 206)
+    }
+</style>
+
+<body>
+
+    <div class="wrapper bg-white">
+        <div class="h4 text-muted text-center pt-2">réinitialiser votre mots de passe</div>
+        {% if message != "" %}
+        <div class="alert alert-danger" role="alert">
+            {{message}}
+        </div>
+        {% endif %}
+        <form class="pt-2" method="POST">
+            {% csrf_token %}
+            <div class="form-group py-2">
+                <div class="input-field">
+                    <input type="password" name="new_password" class="form-control" placeholder="nouveau mot de passe">
+                </div>
+            </div>
+            <div class="form-group py-1 pb-2">
+                <div class="input-field">
+                    <input type="password" name="confirm_password" class="form-control"
+                        placeholder="Confirmez le mot de passe">
+                </div>
+            </div>
+            <input type="submit" name="valider" value="Valider" class='btn btn-primary btn-lg'>
+        </form>
+    </div>
+
+
+
+</body>
+
+</html>

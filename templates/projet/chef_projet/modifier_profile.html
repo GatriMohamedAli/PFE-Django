@@ -1,0 +1,297 @@
+{% extends 'mainChefProjet.html'%}
+{% block contenu %}
+{% load widget_tweaks %}
+{% load static %}
+
+<!-- Page content holder -->
+<div class="page-content p-5" id="content">
+<div>
+    <div style="position: absolute;right: 10px;top: 20px ;margin-right: 30px;">
+      <img src="{% static 'images/logo-tt-200.png ' %}" alt="" style="margin-top: -10px;height: 100px;">
+    </div>
+               <h1>Profile</h1>
+        <hr>
+    </div>
+  <div class="container">
+
+<div class="row ">
+
+	<div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+		<div class="card h-100">
+			<div class="card-body" style="box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.2);">
+				<div class="account-settings">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                {% if chef_projet.image %}
+            <img src='{{ chef_projet.image.url }}' width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+
+            {% else %}
+                <img src="https://img.icons8.com/officel/100/000000/user.png"/>
+            {%endif%}                    <div class="mt-3" style="height: 300px;" >
+                      <h4 style="text-transform: capitalize;">{{chef_projet.nom}} {{chef_projet.prenom}}</h4>
+                      <p class="text-secondary mb-1">Chef projet</p>
+                      
+                    </div>
+                  </div>
+                </div>
+				</div>
+			</div>
+		</div>
+	</div>
+<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+		<div class="card h-100" style="box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.2);">
+			<div class="card-body" style="">
+                <div class="row">
+                <div class="card-body">
+				<form method="POST" novalidate  enctype="multipart/form-data">
+                      {% csrf_token %}
+                    <div class="row ">
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<h6 class="mb-3 text-primary">Info personnelle</h6>
+					</div>
+                    <div class="col-sm-9 text-secondary">
+                        <p>Gérez vos informations personnelles et celles relatives à vos concacts et votre compte d'une manière générale</p>
+                    </div>
+                         <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Image:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {% render_field form.image type="file" class="form-control"%}
+                    </div>
+                    </div>
+                  </div>
+
+
+                     <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Nom:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {% if form.is_bound %}
+                         {% if form.nom.errors %}
+                          {% render_field form.nom class="form-control is-invalid" %}
+                          {% for error in form.nom.errors %}
+                         <div class="invalid-feedback">
+                          {{ error }}
+                        </div>
+                        {% endfor %}
+                     {% else %}
+                    {% render_field form.nom class="form-control is-valid" %}
+                    {% endif %}
+                    {% else %}
+                    {% render_field form.nom class="form-control" %}
+                    {% endif %}
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Prenom:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {% if form.is_bound %}
+                        {% if form.prenom.errors %}
+                          {% render_field form.prenom class="form-control is-invalid" %}
+                            {% for error in form.prenom.errors %}
+                                <div class="invalid-feedback">
+                                  {{ error }}
+                                </div>
+                            {% endfor %}
+                    {% else %}
+                      {% render_field form.prenom class="form-control  type="date" is-valid" %}
+                    {% endif %}
+                  {% else %}
+                    {% render_field form.prenom class="form-control" %}
+                  {% endif %}
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Age:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {% if form.is_bound %}
+                        {% if form.age.errors %}
+                          {% render_field form.age class="form-control is-invalid" %}
+                            {% for error in form.age.errors %}
+                                <div class="invalid-feedback">
+                                  {{ error }}
+                                </div>
+                            {% endfor %}
+                    {% else %}
+                      {% render_field form.age class="form-control is-valid" %}
+                    {% endif %}
+                  {% else %}
+                    {% render_field form.age class="form-control" %}
+                  {% endif %}
+                    </div>
+                  </div>
+
+
+                        <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Date de naissance :</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {% if form.is_bound %}
+                            {% if form.date_naiss.errors %}
+                              {% render_field form.date_naiss class="form-control is-invalid" %}
+                                {% for error in form.date_naiss.errors %}
+                                    <div class="invalid-feedback">
+                                      {{ error }}
+                                    </div>
+                                {% endfor %}
+                        {% else %}
+                          {% render_field form.date_naiss class="form-control is-valid" %}
+                        {% endif %}
+                      {% else %}
+                        {% render_field form.date_naiss class="form-control" %}
+                      {% endif %}
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Adresse:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                    {% if form.is_bound %}
+                            {% if form.adresse.errors %}
+                              {% render_field form.adresse class="form-control is-invalid" %}
+                                {% for error in form.adresse.errors %}
+                                    <div class="invalid-feedback">
+                                      {{ error }}
+                                    </div>
+                                {% endfor %}
+                        {% else %}
+                          {% render_field form.adresse class="form-control is-valid" %}
+                        {% endif %}
+                      {% else %}
+                        {% render_field form.adresse class="form-control" %}
+                      {% endif %}
+                    </div>
+                  </div>
+
+
+                    <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {% if form.is_bound %}
+                            {% if form.email.errors %}
+                              {% render_field form.email class="form-control is-invalid" %}
+                                {% for error in form.email.errors %}
+                                    <div class="invalid-feedback">
+                                      {{ error }}
+                                    </div>
+                                {% endfor %}
+                        {% else %}
+                          {% render_field form.email class="form-control is-valid" %}
+                        {% endif %}
+                      {% else %}
+                        {% render_field form.email class="form-control" %}
+                      {% endif %}
+                    </div>
+                  </div>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">telephone:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        {% if form.is_bound %}
+                            {% if form.telephone.errors %}
+                              {% render_field form.telephone class="form-control is-invalid" %}
+                                {% for error in form.telephone.errors %}
+                                    <div class="invalid-feedback">
+                                      {{ error }}
+                                    </div>
+                                {% endfor %}
+                        {% else %}
+                          {% render_field form.telephone class="form-control is-valid" %}
+                        {% endif %}
+                      {% else %}
+                        {% render_field form.telephone class="form-control" %}
+                      {% endif %}
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">role:</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                        <div class="control">
+                            <select class="form-control" name="role" id="form.role">
+                                <option value="{{chef_projet.role}}" selected >{{chef_projet.role}}</option>
+                            </select>
+                        </div>
+                         </div>
+                  </div>
+
+                        <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Mot de passe</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                     <input type="password" class="form-control" name="motDePasse" id="form.motDePasse" value="{{chef_projet.motDePasse}}" readonly>
+                    </div>
+                  </div>
+
+                   <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<h6 class="mb-3 text-primary">Sécurité :</h6>
+					</div>
+                  <div class="row">
+                    <div class="col-sm-9 text-secondary">
+                        <p>Modifier botre mot de passe et prenez d'autre mesures pour renforcer la sécurité de votre compte</p>
+                    </div>
+                      <div>
+                          <a href="{% url 'modifier_passe' %}" class="nav-link text-dark font-italic"> <i class="fa fa-key" aria-hidden="true"></i>Changer le mot de passe</a>
+                      </div>
+                  </div>
+
+                    <div class="row ">
+					<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+						<div>
+                            <input class="btn btn-primary" type="submit" name="Valider" style="margin-left:40%">
+                            <a type="button"  name="Annuler" class="btn btn-secondary" href="{% url 'profile_utilisateur'  %}">Annuler</a>
+						</div>
+					</div>
+				</div>
+                </form>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
+</div>
+    </div>
+<!-- End demo content -->
+	{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

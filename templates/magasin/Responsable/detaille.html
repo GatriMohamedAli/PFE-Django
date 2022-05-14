@@ -1,0 +1,70 @@
+{% extends 'mainMagazin.html'%}
+{% block content %}
+{% load static %}
+<!-- Page content holder -->
+<div class="page-content p-5" id="content">
+  <div>
+    <h1>Detailler solution </h1>
+    <div style="position: absolute;right: 10px;top: 20px ;margin-right: 30px;">
+      <img src="{% static 'images/logo-tt-200.png ' %}" alt="" style="margin-top: -10px;height: 100px;">
+    </div>
+    <hr>
+  </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-9">
+        <div class="row align-items-center">
+          <div class="col-lg-5">
+            <div class="resume-base bg-primary user-dashboard-info-box p-4">
+              <div class="profile">
+                <div class="jobster-user-info">
+                  <div class="profile-avatar-info mt-3">
+                    <h5 class="text-white">Solution N° :{{solution.num_solution}}</h5>
+                  </div>
+                </div>
+              </div>
+              <div class="about-candidate border-top">
+                <div class="candidate-info">
+                  <h5 class="text-white">Nom:</h5>
+                  <p class="text-white">{{solution.utilisateur.nom}} {{solution.utilisateur.prenom}}</p>
+                </div>
+                <div class="candidate-info">
+                  <h5 class="text-white">Email:</h5>
+                  <p class="text-white">{{solution.utilisateur.email}}</p>
+                </div>
+                <div class="candidate-info">
+                  <h5 class="text-white">Telephone:</h5>
+                  <p class="text-white">{{solution.utilisateur.telephone}}</p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-lg-7">
+            <div class="resume-experience">
+              <div class="timeline-box">
+                <h5 class="resume-experience-title">Information:</h5>
+                <div class="jobster-candidate-timeline">
+                  <div class="jobster-timeline-item">
+                    <div class="jobster-timeline-cricle">
+                      <i class="far fa-circle"></i>
+                    </div>
+                    <div class="jobster-timeline-info">
+                      <div class="dashboard-timeline-info">
+                        <span class="jobster-timeline-time">{{solution.date_solution}}</span>
+                        <h5 class="mb-2">Description Solution</h5>
+                        <p class="mt-2">{{solution.description_solution}}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

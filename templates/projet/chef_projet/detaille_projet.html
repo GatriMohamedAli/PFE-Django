@@ -1,0 +1,238 @@
+{% extends 'mainChefProjet.html'%}
+{% load static %}
+{% block contenu %}
+<div class="page-content p-5" id="content">
+    <div>
+        <h1>Liste des tâches </h1>
+        <div style="position: absolute;right: 10px;top: 20px ;margin-right: 30px;">
+            <img src="{% static 'images/logo-tt-200.png ' %}" alt="" style="margin-top: -10px;height: 100px;">
+        </div>
+        <hr>
+        <div id="succ" hidden>
+            <div class="alert alert-success d-flex align-items-center" role="alert">
+                <div class="d-flex align-items-center">
+                    <div class="spinner-border ms-auto spinner-border-sm" style="margin-right: 5px;" role="status"
+                        aria-hidden="true"></div>
+                    <strong>Suppression en cours...</strong>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <div class="card card-body">
+                    <a class="btn btn-primary " data-toggle="tooltip" data-placement="top" title="Terminer projet"
+                        href="{% url 'terminer_projet' proj=projet.id  %}"
+                        style="margin-left:90% ; margin-bottom:10px;">
+                        <i class="fa fa-hourglass-end" aria-hidden="true"></i></a>
+
+                    <div class="card card-body" style="box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.2);">
+                        <a class='btn btn-sm btn-success' style="left:75%;"
+                            href="{% url 'ajout_tache' proj=projet.id %}">
+                            <i class="fa fa-plus " aria-hidden="true"></i>Nouvelle tâche</a>
+                        <table class="table table-sm">
+                            <tr>
+                                <th>Titre de tâche</th>
+                                <th>Description</th>
+                                <th>Mots clés</th>
+                                <th>Action</th>
+
+
+                            </tr>
+                            {% for tache in tache %}
+                            <tr>
+                                <th>{{tache.titre_tache}}</th>
+                                <th>{{tache.mots_clés}}</th>
+                                <th>{{tache.description_tache}}</th>
+
+                                <th>
+                                    <button class="btn btn-info" id="view" data-bs-toggle="modal"
+                                        data-bs-target="#viewmodal" data-bs-whatever="{{ tache.id }}"
+                                        style="font-size: small;"><i class="fa fa-eye" aria-hidden="true"></i></button>
+                                    <a class='btn btn-sm btn-warning'
+                                        href="{% url 'modifier_tache' proj=projet.id   tache=tache.id %}"><i
+                                            class="fa fa-pencil" aria-hidden="true"></i></a>
+                                    <button class="btn btn-danger" id="delete" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal" data-bs-whatever="{{ tache.id }}"
+                                        style="font-size: small;"><i class="fa fa-trash"></i></button>
+                                    </a>
+                                </th>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="viewmodal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Des informations sur une réclamation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Titre :</label>
+                        <input type="text" class="form-control" id="name" readonly>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Description :</label>
+                        <textarea type="text" class="form-control" id="desc" rows="3" readonly></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Demarche :</label>
+                        <textarea type="text" class="form-control" id="dem" rows="3" readonly></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Difficulte :</label>
+                        <textarea type="text" class="form-control" id="diff" rows="3" readonly></textarea>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Supprimer réclamation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Num° :</label>
+                        <input type="text" class="form-control" id="delete-name" readonly>
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"
+                        onclick="senddelete()">Supprimer</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+{% csrf_token %}
+
+<script>
+
+
+    var viewmodal = document.getElementById('viewmodal')
+    const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value
+    viewmodal.addEventListener('show.bs.modal', function (event) {
+
+        var button = event.relatedTarget
+
+        var recipient = button.getAttribute('data-bs-whatever')
+        console.log(recipient)
+        console.log(button)
+
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'detaille_projet' proj=projet.id %}',
+            data: {
+                'csrfmiddlewaretoken': csrf,
+                'data': parseInt(recipient)
+            },
+            success: (res) => {
+                console.log(res)
+                var modalBodyInput = viewmodal.querySelector('#name')
+                var modalBodyInput1 = viewmodal.querySelector('#desc')
+                var modalBodyInput2 = viewmodal.querySelector('#dem')
+                var modalBodyInput3 = viewmodal.querySelector('#diff')
+
+
+
+                modalBodyInput.value = res.res.nom
+                modalBodyInput1.value = res.res.desc
+                modalBodyInput2.value = res.res.dem
+                modalBodyInput3.value = res.res.diff
+
+
+
+            },
+            error: (err) => {
+                console.log()
+            }
+        })
+
+
+    })
+
+
+    var deleteModal = document.getElementById('deleteModal')
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+
+        var button = event.relatedTarget
+
+        var recipient = button.getAttribute('data-bs-whatever')
+
+        var modalTitle = deleteModal.querySelector('.modal-title')
+        var modalBodyInput = deleteModal.querySelector('.modal-body input')
+
+        modalTitle.textContent = 'Supprimer Tache '
+        modalBodyInput.value = recipient
+    })
+
+    function tempAlert(msg, duration) {
+        var el = document.getElementById("succ");
+        var e = document.getElementById("suc");
+        setTimeout(function () {
+            el.setAttribute("hidden", true);
+            location.reload();
+
+        }, duration);
+        el.removeAttribute("hidden");
+    }
+
+    function senddelete() {
+        var exampleModal = document.getElementById('deleteModal')
+        var modalBodyInput = exampleModal.querySelector('.modal-body input')
+        console.log(modalBodyInput.value)
+        fetch('', {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                'id': modalBodyInput.value
+            }),
+
+        })
+
+        tempAlert("DELETED", 2000);
+
+        return false;
+    }
+
+
+
+</script>
+{% endblock %}

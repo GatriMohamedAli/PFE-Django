@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Projet</title>
+    <!-- CSS only -->
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js"></script>
+
+    <style>
+.card .image {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.card .image img {
+    width: 100%;
+    transition: .5s;
+}
+.card:hover .image img {
+    opacity: .5;
+    transform: translateX(30%);/*100%*/
+}
+.card .details {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 70%;/*100%*/
+    background: #ffc107;
+    transition: .5s;
+    transform-origin: left;
+    transform: perspective(2000px) rotateY(-90deg);
+}
+.card:hover .details {
+    transform: perspective(2000px) rotateY(0deg);
+}
+.card .details .center {
+    padding: 20px;
+    text-align: center;
+    position: absolute;
+    transform: translateY(-50%);
+}
+.card .details .center h1 {
+    margin: 0;
+    padding: 0;
+    color: #ff3636;
+    line-height: 20px;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+.card .details .center h1 span {
+    font-size: 14px;
+    color: #262626;
+}
+.card .details .center p {
+    margin: 10px 0;
+    padding: 0;
+    color: #262626;
+}
+.card .details .center ul {
+    margin: 10px auto 0;
+    padding: 0;
+    display: table;
+}
+.card .details .center ul li {
+    list-style: none;
+    margin: 0 5px;
+    float: left;
+}
+.card .details .center ul li a {
+    display: block;
+    background: #262626;
+    color: #fff;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    transform: .5s;
+}
+
+
+  .calendar {
+  width:50px;
+  height :50px;
+  margin: auto;
+  font-size: 13px;
+}
+
+.calendar tr, .calendar td {
+  border: 1px solid black;
+}
+
+.calendar th {
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.calendar td {
+  width: 50px;
+  height: 50px;
+  padding: 20px 0px 0px 5px;
+}
+
+.month {
+  font-size: 25px;
+}
+
+.date {
+  font-size: 16px;
+}
+
+ul {
+  height: 100%;
+  padding: 0px 5px 0px 20px;
+}
+
+a {
+  color: #17a2b8;
+}
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.clearfix {
+  margin-left:50%;
+  width:41%;
+  position: relative;
+  top:-30%; left:10%;
+
+}
+
+ body {
+      background-image: url('{% static "images/img.png " %}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: top;
+      background-attachment: fixed;
+    }
+		.back{
+	background:rgba(255,255,255, 0.6);
+    }
+
+    </style>
+</head>
+<body>
+<div  class="main">
+    {% include 'base/NavbarResponsable.html' %}
+    {% block contenu %}
+    {% endblock %}
+</div>
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+</script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+function openPage(pageName,elmnt) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  document.getElementById(pageName).style.display = "block";
+}
+
+// Get the element with id="defaultOpen" and click on it
+document.getElementById("defaultOpen").click();
+</script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css"/>
+
+
+<script>
+        $(document).ready(function(){
+            $('#dtBasicExample').DataTable({
+            "language":{
+            "decimal":        "",
+            "emptyTable":     "Aucune donnée disponible",
+            "info":           "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+            "infoEmpty":      "Affichage 0 à 0 sur 0 entrées",
+            "infoFiltered":   "(filtré de _MAX_ total entrées)",
+            "infoPostFix":    "",
+            "thousands":      ",",
+            "lengthMenu":     "Afficher _MENU_ ",
+            "loadingRecords": "Chargement...",
+            "processing":     "Traitement...",
+            "search":         "Search:",
+            "zeroRecords":    "Aucun enregistrements correspondants trouvés",
+            "paginate": {
+                "first":      "premier",
+                "last":       "dernier",
+                "next":       "Suivant",
+                "previous":   "Précédent"
+            },
+            "aria": {
+                "sortAscending":  ": activate to sort column ascending",
+                "sortDescending": ": activate to sort column descending"
+            }
+            },
+            "searching": false,
+            "aLengthMenu": [[3, 5, 10, 25, -1], [3, 5, 10, 25, "Tout"]],
+            "iDisplayLength":3,
+            });
+
+        });
+    </script>
+
+</body>
+</html>

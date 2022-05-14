@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Projet</title>
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.2.1/dist/chart.min.js"></script>
+  <style>
+    .btn {
+      outline: none;
+      color: black;
+      background-color: transparent;
+      box-shadow: 0 0 0 0;
+    }
+
+    .w-60 {
+      width: 100px;
+      height: 100px;
+    }
+
+    a {
+      color: #707070;
+    }
+
+    .test {
+      height: 350px;
+
+    }
+
+    .containerr {
+      width: calc(100% - 160px);
+      height: 100vh;
+      margin-right: -10px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .cardd {
+      margin-top: 10px;
+      cursor: pointer;
+      width: 200px;
+      height: 200px;
+      position: relative;
+    }
+
+    .front,
+    .back {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      backface-visibility: hidden;
+      position: absolute;
+      transition: transform 0.6s linear;
+    }
+
+    .front img {
+      max-height: 100%;
+      display: block;
+      max-width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .front {
+      transform: perspective(600px) rotateY(0deg);
+    }
+
+    .back {
+      background: #f1f1f1;
+      transform: perspective(600px) rotateY(180deg);
+    }
+
+    .back-content {
+      color: #2c3e50;
+      text-align: center;
+      width: 100%;
+    }
+
+    .sm {
+      margin: 20px 0;
+      font-size: small;
+      height: 70px;
+    }
+
+    .cardd:hover>.front {
+      transform: perspective(600px) rotateY(-180deg);
+    }
+
+    .cardd:hover>.back {
+      transform: perspective(600px) rotateY(0deg);
+    }
+
+    .btnn {
+      border: 1px solid #3498db;
+      background: none;
+      padding: 5px 20px;
+      font-size: 20px;
+      font-family: "montserrat";
+      cursor: pointer;
+      margin: 10px;
+      transition: 0.8s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btnn1 {
+      color: #3498db;
+    }
+
+    .btnn1:hover {
+      color: #fff;
+    }
+
+    .btnn::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 0%;
+      background: #3498db;
+      z-index: -1;
+      transition: 0.8s;
+    }
+
+    .btnn1::before {
+      top: 0;
+      border-radius: 0 0 50% 50%;
+    }
+
+    .btnn1:hover::before {
+      height: 180%;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    /* Set height of body and the document to 100% */
+    body,
+    html {
+      height: 100%;
+      margin: 0;
+      font-family: Arial;
+    }
+
+    /* Style tab links */
+    .tablink {
+      float: left;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 14px 16px;
+      font-size: 17px;
+      width: 25%;
+    }
+
+    .tablink:hover {
+      background-color: #777;
+    }
+
+
+    /*LIST*/
+    #maliste {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    h6 {
+      background: #2980b9;
+      color: white;
+      margin: 0;
+      padding: 10px 20px;
+      text-transform: uppercase;
+      font-size: 15px;
+      font-weight: normal;
+    }
+
+    #add {}
+
+    .fa-plus {
+      float: right;
+    }
+
+    #maliste li {
+      background: #fff;
+      height: 40px;
+      line-height: 40px;
+      color: #666;
+    }
+
+    #maliste li:nth-child(2n) {
+      background: #f7f7f7;
+    }
+
+    #span {
+      background: #e74c3c;
+      height: 40px;
+      margin-right: 20px;
+      text-align: center;
+      color: white;
+      width: 0;
+      display: inline-block;
+      transition: 0.2s linear;
+      opacity: 0;
+    }
+
+    #maliste li:hover #span {
+      width: 40px;
+      opacity: 1;
+    }
+
+    #maliste input {
+      font-size: 18px;
+      color: #2980b9;
+      background-color: #f7f7f7;
+      width: 100%;
+      padding: 13px 13px 13px 20px;
+      box-sizing: border-box;
+      border: 3px solid rgba(0, 0, 0, 0);
+    }
+
+    #maliste input:focus {
+      background: #fff;
+      border: 3px solid #2980b9;
+      outline: none;
+    }
+
+    body {
+      background-image: url('{% static "images/img2.png " %}');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: top;
+      background-attachment: fixed;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+
+    {% include 'base/NavbarMagasin.html' %}
+    {% block content %}
+    {% endblock content%}
+  </div>
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+    </script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
+    </script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script type="text/javascript">
+
+    $(document).ready(function () {
+      var ShowForm = function () {
+        var btn = $(this);
+        $.ajax({
+          url: btn.attr("data-url"),
+          type: 'get',
+          dataType: 'json',
+          beforeSend: function () {
+            $('#modal-article').modal('show');
+          },
+          success: function (data) {
+            $('#modal-article .modal-content').html(data.html_form);
+          }
+        });
+      };
+
+      var SaveForm = function () {
+        var form = $(this);
+        var formData = new FormData(form[0]);
+        $.ajax({
+          url: $(this).attr('data-url'),
+          data: formData,
+          type: 'post',
+          dataType: 'json',
+          cache: false,
+          contentType: false,
+          enctype: 'multipart/form-data',
+          processData: false,
+          success: function (data) {
+            if (data.form_is_valid) {
+              $('#article-table div').html(data.article_list);
+              $('#modal-article').modal('hide');
+            } else {
+              $('#modal-article .modal-content').html(data.html_form)
+            }
+          }
+        })
+        return false;
+      }
+
+      // create
+      $(".show-form").click(ShowForm);
+      $("#modal-article").on("submit", ".create-form", SaveForm);
+
+      //update
+      $('#article-table').on("click", ".show-form-update", ShowForm);
+      $('#modal-article').on("submit", ".update-form", SaveForm)
+
+      //delete
+      $('#article-table').on("click", ".show-form-delete", ShowForm);
+      $('#modal-article').on("submit", ".delete-form", SaveForm)
+    });
+
+
+
+    $(document).ready(function () {
+      $("#code").fadeOut();
+      $("#nbr").fadeOut();
+      $("#add").fadeOut();
+
+      $("#maliste").on("click", "span", function (event) {
+        $(this)
+          .parent()
+          .fadeOut(500, function () {
+            $(this).remove();
+          });
+        event.stopPropagation();
+      });
+
+      $("#add").click(function (event) {
+        var code = $("#code").val();
+        var nbr = $("#nbr").val();
+        if (code != "" && nbr != "") {
+          const lis = document.getElementById('maliste').getElementsByTagName('li');
+          liste = []
+          test = false
+          if (lis.length > 0) {
+            for (let i = 0; i <= lis.length - 1; i++) {
+              element = lis[i].getAttribute('id');
+              c = element.substring(0, element.indexOf('*'))
+              if (c == code) {
+                document.getElementById('exist').removeAttribute("hidden")
+                test = true
+                /*document.getElementById('ad').setAttribute("disabled", true);*/
+                setTimeout(function () {
+                  document.getElementById('exist').setAttribute("hidden", true);
+
+                }, 3000);
+              }
+            }
+            if (test == false) {
+              var todoText = code + "*" + nbr;
+              $("#maliste").append(
+                "<li id='" + todoText + "'><span id='span'><i class='fa fa-trash'></i></span> " + todoText + "<input type='hidden' name='liste[]' value='" + todoText + "'></li>"
+              );
+              $("#code").val("");
+              $("#nbr").val("");
+              $("#code").attr("placeholder", "Code article");
+              $("#nbr").attr("placeholder", "Quantité");
+            }
+          }
+        }
+      });
+
+      $(".fa-plus").click(function () {
+        $("#code").fadeToggle();
+        $("#nbr").fadeToggle();
+        $("#add").fadeToggle();
+      });
+    });
+  </script>
+  <script>
+    function openPage(pageName, elmnt) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+
+      document.getElementById(pageName).style.display = "block";
+    }
+
+// Get the element with id="defaultOpen" and click on it
+
+  </script>
+
+  <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+  <script type="text/javascript" src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap4.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" />
+
+  <script>
+    $(document).ready(function () {
+      $('#dtBasicExample').DataTable({
+        "language": {
+          "decimal": "",
+          "emptyTable": "Aucune donnée disponible",
+          "info": "Affichage de _START_ à _END_ sur _TOTAL_ entrées",
+          "infoEmpty": "Affichage 0 à 0 sur 0 entrées",
+          "infoFiltered": "(filtré de _MAX_ total entrées)",
+          "infoPostFix": "",
+          "thousands": ",",
+          "lengthMenu": "Afficher _MENU_ ",
+          "loadingRecords": "Chargement...",
+          "processing": "Traitement...",
+          "search": "Search:",
+          "zeroRecords": "Aucun enregistrements correspondants trouvés",
+          "paginate": {
+            "first": "premier",
+            "last": "dernier",
+            "next": "Suivant",
+            "previous": "Précédent"
+          },
+          "aria": {
+            "sortAscending": ": activate to sort column ascending",
+            "sortDescending": ": activate to sort column descending"
+          }
+        },
+        "searching": false,
+        "aLengthMenu": [[3, 5, 10, 25, -1], [3, 5, 10, 25, "Tout"]],
+        "iDisplayLength": 3,
+      });
+
+    });
+  </script>
+</body>
+
+</html>

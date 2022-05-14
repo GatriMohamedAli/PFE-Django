@@ -1,0 +1,26 @@
+{% extends 'mainAdmin.html'%}
+{% block contenu %}
+{% load static %}
+<div>
+    <h1>Supprimer un utilisateur </h1>
+    <div style="position: absolute;right: 10px;top: 20px ;margin-right: 30px;">
+        <img src="{% static 'images/logo-tt-200.png ' %}" alt="" style="margin-top: -10px;height: 100px;">
+    </div>
+    <hr>
+</div>
+
+   <div class="container" style="margin-left:20%; margin-top:15%;">
+<div class="row">
+<div class="col-md-6">
+    <div class="card card-body">
+        <p>Voulez-vous supprimer l'utilisateur ?</p>
+        <form action="{% url 'supprimer_utilisateur' user=utilisateur.id   %}" method="POST">
+          {% csrf_token %}
+             <center><a class="btn btn-warning" href="{% url 'liste_Utilisateur'   choix=utilisateur.role %}">Annuler</a>
+             <input class="btn btn-danger" type="submit" name="Confirmer"></center>
+        </form>
+    </div>
+</div>
+    </div></div>
+    </div>
+{% endblock %}

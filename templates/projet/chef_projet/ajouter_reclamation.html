@@ -1,0 +1,212 @@
+
+{% extends 'mainChefProjet.html'%}
+{% load widget_tweaks %}
+{% block contenu %}
+{% load static %}
+<div class="page-content p-5" id="content">
+<div class="container" >
+<div>
+  <h1>Ajouter une réclamation </h1>
+  <div style="position: absolute;right: 10px;top: 20px ;margin-right: 30px;">
+    <img src="{% static 'images/logo-tt-200.png ' %}" alt="" style="margin-top: -10px;height: 100px;">
+  </div>
+  <hr>
+</div>
+    <div class="row gutters" >
+	<div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12" >
+		<div class="card h-100">
+			<div class="card-body">
+				<div class="account-settings">
+                <div class="card-body">
+                    <form action="" method="POST" novalidate>
+                    {%  csrf_token %}
+                     <label>Objet de reclamation:</label>
+                    {% if form.is_bound %}
+                         {% if form.objet.errors %}
+                          <input type="text" class="form-control is-invalid" id="form.objet" name="objet">
+                          {% for error in form.objet.errors %}
+                         <div class="invalid-feedback">
+                          {{ error }}
+                        </div>
+                        {% endfor %}
+                     {% else %}
+                        <input type="text" class="form-control is-valid" id="form.objet" name="objet">
+                    {% endif %}
+                    {% else %}
+                    <input type="text" class="form-control" id="form.objet" name="objet">
+                    {% endif %}
+                     <label>Description de reclamation:</label>
+                     {% if form.is_bound %}
+                         {% if form.description_reclamation.errors %}
+                          {% render_field form.description_reclamation class="form-control is-invalid" %}
+                          {% for error in form.description_reclamation.errors %}
+                         <div class="invalid-feedback">
+                          {{ error }}
+                        </div>
+                        {% endfor %}
+                     {% else %}
+                      {% render_field form.description_reclamation class="form-control is-valid" %}
+                    {% endif %}
+                    {% else %}
+                    {% render_field form.description_reclamation class="form-control" %}
+                    {% endif %}
+
+                    <label>service:</label>
+                     {% if form.is_bound %}
+                        {% if form.service.errors %}
+                          {% render_field form.service class="form-control is-invalid" %}
+                            {% for error in form.service.errors %}
+                                <div class="invalid-feedback">
+                                  {{ error }}
+                                </div>
+                            {% endfor %}
+                    {% else %}
+                      {% render_field form.service class="form-control is-valid" %}
+                    {% endif %}
+                  {% else %}
+                    {% render_field form.service class="form-control" %}
+                  {% endif %}
+
+
+                 <label>Statut de reclamation :</label>
+                         {% if form.is_bound %}
+                            {% if form.statut.errors %}
+                              {% render_field form.statut class="form-control is-invalid" %}
+                                {% for error in form.statut.errors %}
+                                    <div class="invalid-feedback">
+                                      {{ error }}
+                                    </div>
+                                {% endfor %}
+                        {% else %}
+                          {% render_field form.statut class="form-control is-valid" %}
+                        {% endif %}
+                      {% else %}
+                        {% render_field form.statut class="form-control" %}
+                      {% endif %}
+
+                        <div class="field">
+                        <label class="label">Nom d'utilisateur</label>
+                        <div class="control">
+                        <select class="form-control" name="utilisateur" id="form.utilisateur">
+                            <option value="{{chef_projet.id}}" selected >{{chef_projet.nom}}</option>
+                        </select>
+                        </div>
+                      </div>
+                     <input class="btn btn-danger" type="submit" name="Valider" style="margin-left:40%">
+                      <a class="btn btn-warning" href="{% url 'listReclamation'   %}">Annuler</a>
+                </form>
+                 </div>
+                 </div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+		<div class="card h-100">
+			<div class="card-body">
+				<div class="row">
+                    <div class="card-body">
+                        <div id="madiv" >
+                            {% block content %}
+                            <h5>Réclamation Déja existe ou nn</h5>
+                            <div id="box" class="results-card not-visible">
+                            </div>
+                            {% endblock content %}
+                         </div>
+                </div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+    <script>
+    const url=window.location.href
+    const serachInput =document.getElementById('form.objet')
+    const resultsBox = document.getElementById('box')
+    console.log(serachInput)
+
+    const csrf= document.getElementsByName('csrfmiddlewaretoken')[0].value
+    console.log(csrf)
+
+
+    const sendSearchData = (reclamation) => {
+        $.ajax({
+                type:'POST',
+                url:'{% url 'search' %}',
+                data:{
+                    'csrfmiddlewaretoken':csrf,
+                    'reclamation':reclamation
+                },
+                success:(res)=> {
+                    console.log(res.data)
+                    const data = res.data
+                    if (Array.isArray(data)){
+                        resultsBox.innerHTML=""
+                        var i = 0;
+
+                      data.forEach(reclamation => {
+                        i++
+                        var ch="/listSolutionReclamation/"+reclamation.id
+                        resultsBox.innerHTML += '<div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">'
+                          + '<div class="card-header">Réclamation Num: ' + i + '</div>'
+                          + '<div class="card-body">'
+                          + '<h5 class="card-title">' + reclamation.objet + '</h5>'
+                          + '<p class="card-text">' + reclamation.description_reclamation + '.</p>'
+                          + '</div>'
+                          + '<div class="card-footer">'
+                          +'<a type="button" class="btn btn-secondary btn-sm" style="float: right;"href="'+ch+'" class="item">Visualiser</a>'
+                          + '</div>'
+                          + '</div>'
+                        })
+                    }else{
+                        if(serachInput.value.length>0)
+                        {
+                            resultsBox.innerHTML='<p>'+data+'</p>'
+                        }else{
+                           resultsBox.classList.add('not-visible')
+                        }
+                    }
+                },
+                error: (err)=> {
+                    console.log(err)
+                }
+
+        })
+    }
+
+    serachInput.addEventListener('keyup', e=>{
+    console.log(e.target.value)
+    if (resultsBox.classList.contains('not-visible'))
+        {resultsBox.classList.remove('not-visible')}
+
+    sendSearchData(e.target.value)
+    })
+
+</script>
+</div>
+{% endblock %}
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

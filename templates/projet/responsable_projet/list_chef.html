@@ -1,0 +1,102 @@
+
+{% extends 'mainResponsable.html'%}
+{% block contenu %}
+{% load static %}
+<!-- Page content holder -->
+<div class="page-content p-5" id="content">
+<div>
+  <div style="position: absolute;right: 10px;top: 20px ;margin-right: 30px;">
+      <img src="{% static 'images/logo-tt-200.png ' %}" alt="" style="margin-top: -10px;height: 100px;">
+    </div>
+      <h1>Liste des chefs </h1>
+
+  <hr>
+</div>
+<br>
+<div class="container-fluid" style="width: 100%; height: 50px; ">
+  <input class="form-control"
+    style="width: 350px; background-color:rgba(207, 204, 204, 0.521) !important; float: right;" type="text"
+    name="search" id="search" placeholder="Rechercher ici...(Telephone, Nom, Prenom)">
+</div>
+
+ <div class="containerr">
+     <div class="d-flex flex-wrap">
+    {% for chef in chefs %}
+     <div id="{{ chef.id }}" class="card" style="box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.2); width: 220px;height: 220px;margin-left: 50px; border-radius: 5px;">
+        <div class="image">
+          {% if chef.image %}
+            <img src='{{ chef.image.url }}' alt="">
+            {% else %}
+                <img src="https://img.icons8.com/officel/100/000000/user.png"/>
+            {%endif%}
+        </div>
+        <div class="details" style="width: 200px;height: 220px;border-radius: 5px;">
+          <div class="center" style="width: 200px;height: 50px;">
+            <h4 style="font-family: 'Times New Roman', Times, serif; color: #ff8080;"> <strong> {{chef.nom}} <span>{{chef.prenom}} </span></strong></h4>
+                <p>{{chef.age}} ans</p>
+                <p>Email : {{chef.email}}</p>
+                <p>Téléphone : {{chef.telephone}}</p>
+          </div>
+        </div>
+      </div>
+  {% endfor %}
+ </div>
+</div>
+</div>
+{% csrf_token %}
+<script>
+  const url = window.location.href
+  const serachInput = document.getElementById('search')
+
+  console.log(serachInput)
+
+
+  const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value
+  console.log(csrf)
+
+
+  const sendSearchData = (s) => {
+    $.ajax({
+      type: 'POST',
+      url: '{% url 'chefs' %}',
+      data: {
+        'csrfmiddlewaretoken': csrf,
+        's': serachInput.value
+      },
+      success: (res) => {
+        allarray = res.data[1]
+        notall = res.data[0]
+        arrayofnotallids = []
+        notall.forEach(el => {
+          arrayofnotallids.push(el.id)
+        })
+        console.log(" ARRAY =", arrayofnotallids)
+        allarray.forEach(element => {
+          console.log('ELEMENT= ', element.id)
+          if (arrayofnotallids.indexOf(element.id) != -1) {
+            console.log("YES")
+            var d = document.getElementById(element.id)
+            d.removeAttribute("hidden")
+          } else {
+            var d = document.getElementById(element.id)
+            console.log(d)
+            d.setAttribute("hidden", true);
+          }
+        });
+        console.log(allarray[0].id)
+        console.log(notall)
+      },
+      error: (err) => {
+        console.log(err)
+      }
+
+    })
+  }
+
+  serachInput.addEventListener('keyup', e => {
+    console.log(e.target.value)
+    sendSearchData(e.target.value)
+  })
+</script>
+<!-- End demo content -->
+{% endblock %}

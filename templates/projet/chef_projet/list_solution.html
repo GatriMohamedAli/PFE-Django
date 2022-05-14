@@ -1,0 +1,64 @@
+{% extends 'mainChefProjet.html'%}
+{% block contenu %}
+{% load static %}
+<!-- Page content holder -->
+<div class="page-content p-5" id="content">
+        <div>
+            <h1>Liste des solution </h1>
+            <div style="position: absolute;right: 10px;top: 20px ;margin-right: 30px;">
+                <img src="{% static 'images/logo-tt-200.png ' %}" alt="" style="margin-top: -10px;height: 100px;">
+            </div>
+            <hr>
+        </div>
+<div class="row">
+     <div class="row">
+        <div class="col-md-17">
+            <div class="osahan-account-page-right shadow-sm bg-white p-4 h-100">
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade  active show">
+                        <a type="button" class="btn btn-primary button" href="{% url 'ajouterSolution'  rec=reclamations.id%}" style="position: absolute;left:75%;margin-top:-2.5%"><span>Ajouter une solution</span></a>
+                        <hr>
+                        <div class="row">
+                                                                        {% if solutions.count > 0 %}
+
+                                        {% for solution in solutions %}
+                            <div class="col-md-4 col-sm-6 mb-4 pb-2">
+                                <div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">
+                                    <div class="p-3 position-relative bg-light">
+                                         <div class="view">
+                                            <a class="btn btn-outline-primary btn-sm" href="{% url 'detaille'  rec=reclamations.id sol=solution.id %}"><i class="fa fa-search-plus" aria-hidden="true"></i></a>
+                                         </div>
+                                        <div class="list-card-body">
+                                            <h6 class="mb-1"><a href="#" class="text-black">Solution N° :{{solution.num_solution}}
+                                             </a>
+                                          </h6>
+                                            <p class="text-gray mb-3">{{ solution.utilisateur.nom }} a deposée la solution</p>
+                                            <p class="text-gray mb-3">{{ solution.utilisateur.role }}</p>
+
+                                            <p class="text-gray mb-3 time"><span class="bg-light text-dark rounded-sm pl-2 pb-1 pt-1 pr-2"><i class="icofont-wall-clock"></i> {{solution.date_solution}}</span></p>
+                                        </div>
+                                        {% if solution.utilisateur.id == chef_projet.id %}
+                                        <hr>
+                                            <a class="btn btn-outline-warning btn-sm" href="{% url 'modifierSolution'  rec=reclamations.id sol=solution.id %}"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                                            <a class="btn btn-outline-danger btn-sm" href="{% url 'supprimerSolution'  rec=reclamations.id sol=solution.id %}"><i class="fa fa-ban" aria-hidden="true"></i></a>
+                                        {%endif%}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {%else%}
+                         <div class="alert alert-warning" role="alert">Aucune solution déposée</div>
+                         {%endif%}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</div>
+<!-- End demo content -->
+	{% endblock %}

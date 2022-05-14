@@ -1,0 +1,186 @@
+{% extends 'mainChefProjet.html'%}
+{% load widget_tweaks %}
+{% block contenu %}
+{% load static %}
+<!-- Page content holder -->
+<div class="page-content p-5" id="content">
+    <div class="container">
+        <div>
+            <h1>Ajouter une solution </h1>
+            <div style="position: absolute;right: 10px;top: 20px ;margin-right: 30px;">
+                <img src="{% static 'images/logo-tt-200.png ' %}" alt="" style="margin-top: -10px;height: 100px;">
+            </div>
+            <hr>
+        </div>
+        <div class="row gutters">
+            <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="account-settings">
+                            <div class="card-body">
+                                <form action="" method="POST" novalidate>
+                                    {% csrf_token %}
+
+                                    <label>num_solution</label>
+                                    {% if form.is_bound %}
+                                    {% if form.num_solution.errors %}
+                                    {% render_field form.num_solution class="form-control is-invalid" %}
+                                    {% for error in form.num_solution.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ error }}
+                                    </div>
+                                    {% endfor %}
+                                    {% else %}
+                                    {% render_field form.num_solution class="form-control is-valid" %}
+                                    {% endif %}
+                                    {% else %}
+                                    {% render_field form.num_solution class="form-control" %}
+                                    {% endif %}
+
+
+                                    <label>description_solution:</label>
+                                    {% if form.is_bound %}
+                                    {% if form.description_solution.errors %}
+                                    <textarea class="form-control is-invalid" id="form.description_solution"
+                                        name="description_solution"></textarea>
+                                    {% for error in form.description_solution.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ error }}
+                                    </div>
+                                    {% endfor %}
+                                    {% else %}
+                                    <textarea class="form-control is-invalid" id="form.description_solution"
+                                        name="description_solution"></textarea>
+                                    {% endif %}
+                                    {% else %}
+                                    <textarea class="form-control" id="form.description_solution"
+                                        name="description_solution"></textarea>
+                                    {% endif %}
+
+
+
+                                    <div class="field">
+                                        <label class="label">Reclamation</label>
+                                        <div class="control">
+                                            <select class="form-control" name="reclamation" id="form.reclamation">
+                                                <option value="{{reclamations.id}}" selected>{{reclamations.objet}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="field">
+                                        <label class="label">Nom d'utilisateur</label>
+                                        <div class="control">
+                                            <select class="form-control" name="utilisateur" id="form.utilisateur">
+                                                <option value="{{chef_projet.id}}" selected>{{chef_projet.nom}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+                                    <input class="btn btn-danger" type="submit" name="Valider" style="margin-left:40%">
+                                    <a class="btn btn-warning"
+                                        href="{% url 'listSolutionReclamation' rec=reclamations.id %}">Annuler</a>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="card-body">
+                                <div id="madiv">
+                                    {% block content %}
+                                    <h5>Solution Déja existe ou nn</h5>
+                                    <div id="box" class="results-card not-visible">
+                                    </div>
+                                    {% endblock content %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    {% csrf_token %}
+
+
+
+
+
+
+
+    <script>
+        const url = window.location.href
+        const serachInput = document.getElementById('form.description_solution')
+        const resultsBox = document.getElementById('box')
+        console.log(serachInput)
+
+        const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value
+        console.log(csrf)
+
+
+        const sendSearchData = (solution) => {
+            $.ajax({
+                type: 'POST',
+                url: '{% url 'search_solution' %}',
+                data: {
+                    'csrfmiddlewaretoken': csrf,
+                    'solution': solution
+                },
+                success: (res) => {
+                    console.log(res.data)
+                    const data = res.data
+                    if (Array.isArray(data)) {
+                        resultsBox.innerHTML = ""
+                        var i = 0
+                        data.forEach(solution => {
+                            i++
+                            var ch = "/solutionDétailler/" + solution.rec + "/detaille/" + solution.id
+                            resultsBox.innerHTML += '<div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">'
+                                + '<div class="card-header">Solution Num: ' + i + '</div>'
+                                + '<div class="card-body">'
+                                + '<p class="card-text">' + solution.description_solution + '.</p>'
+                                + '</div>'
+                                + '<div class="card-footer">'
+                                + '<a type="button" class="btn btn-secondary btn-sm" style="float: right;"href="' + ch + '" class="item">Visualiser</a>'
+                                + '</div>'
+                                + '</div>'
+                        })
+                    } else {
+                        if (serachInput.value.length > 0) {
+                            resultsBox.innerHTML = '<p>' + data + '</p>'
+                        } else {
+                            resultsBox.classList.add('not-visible')
+                        }
+                    }
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+
+            })
+        }
+
+        serachInput.addEventListener('keyup', e => {
+            console.log(e.target.value)
+            if (resultsBox.classList.contains('not-visible')) { resultsBox.classList.remove('not-visible') }
+
+            sendSearchData(e.target.value)
+        })
+
+    </script>
+</div>
+<!-- End demo content -->
+{% endblock %}

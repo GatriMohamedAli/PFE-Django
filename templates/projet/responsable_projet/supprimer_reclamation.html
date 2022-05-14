@@ -1,0 +1,30 @@
+
+{% extends 'mainResponsable.html'%}
+{% block contenu %}
+{% load static %}
+{% load widget_tweaks %}
+<div class="page-content p-5" id="content">
+    <div>
+        <h1>Supprimer une réclamation </h1>
+        <div style="position: absolute;right: 10px;top: 20px ;margin-right: 30px;">
+            <img src="{% static 'images/logo-tt-200.png ' %}" alt="" style="margin-top: -10px;height: 100px;">
+        </div>
+        <hr>
+    </div>
+
+<div class="container" style="margin-left:20%; margin-top:15%;">
+<div class="row">
+<div class="col-md-6">
+    <div class="card card-body">
+        <p>{{message}}</p>
+        <form action="{% url 'supprimerReclamation' reclamations=reclamations.id   %}" method="POST">
+          {% csrf_token %}
+            <center> <a class="btn btn-warning" href="{% url 'listReclamation' %}">Annuler</a>
+             <input class="btn btn-danger" type="submit" name="Confirmer"></center>
+        </form>
+    </div>
+</div>
+    </div>
+</div>
+</div>
+	{% endblock %}

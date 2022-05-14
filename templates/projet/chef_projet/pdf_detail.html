@@ -1,0 +1,70 @@
+<html>
+    <head>
+        <title>projet :{{projet.id}}</title>
+        <style type="text/css">
+            body {
+                font-weight: 200;
+                font-size: 14px;
+            }
+            .header {
+                font-size: 20px;
+                font-weight: 100;
+                text-align: center;
+                color: #007cae;
+            }
+            .title {
+                font-size: 22px;
+                font-weight: 100;
+               /* text-align: right;*/
+               padding: 10px 20px 0px 20px;  
+            }
+            .title span {
+                color: #007cae;
+            }
+            .details {
+                padding: 10px 20px 0px 20px;
+                text-align: left !important;
+                /*margin-left: 40%;*/
+            }
+            .hrItem {
+                border: none;
+                height: 1px;
+                /* Set the hr color */
+                color: #333; /* old IE */
+                background-color: #fff; /* Modern Browsers */
+            }
+        </style>
+    </head>
+    <body>
+        <div class='wrapper'>
+            <div class='header'>
+                <p class='title'>Projet {{projet.id}}</p>
+            </div>
+        </div>
+        <div>
+        <div class='details'>
+            <h2 class="text-xs-center"> Details de projet </h2>
+                    Nom de projet : {{projet.nom_projet}} </br>
+                    date d'ajout de projet : {{projet.date_ajout_projet}} </br>
+                    chef de projet : {{projet.chef_projet}} </br>
+                    description_projet: {{projet.description_projet}} </br>
+                    adresse projet :  {{projet.adresse_projet}} </br>
+                    cout projet : {{projet.cout_projet}} DT </br>
+                    delai projet : {{projet.delai_projet}} Mois</br>
+                    date debut : {{projet.date_debut}}</br>
+                    date_fin :  {{projet.date_fin}}</br>
+                    etat_projet : {{projet.etat_projet}}</br>
+                    caracteristique_projet :{{projet.caracteristique_projet }}</br>
+            <hr class='hrItem' />
+            {% for tache in tache %}
+                <h2 class="text-xs-center"> Liste des tâche </h2>
+                <div>Tâche {{tache.titre_tache}} </div>
+                <div>{{tache.description_tache}}</div>
+                <div>Tâche {{tache.demarche_tache}} </div>
+                <div>{{tache.difficulté_tache}}</div>
+                <div> Les Mots clés : {{tache.mots_clés}}</div>
+            {% endfor %}
+
+    </div>
+    </body>
+</html>

@@ -1,0 +1,117 @@
+{% load widget_tweaks %}
+{% load static %}
+
+<html>
+
+<head>
+    <title>DataFlair send email</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <style>
+        body {
+            background-image: url('{% static "images/img.png " %}');
+            background-repeat: no-repeat;
+            background-size: 1000px 1000px;
+            background-position: top;
+            background-attachment: fixed;
+
+        }
+
+        .wrapper {
+            width: 900px;
+            border-radius: 10px;
+            margin-top: 8%;
+            margin-left: 25%;
+
+            padding: 30px 40px;
+            box-shadow: 20px 20px 80px rgb(206, 206, 206)
+        }
+
+        .form-control:not(textarea) {
+            height: 44px;
+        }
+
+        .form-control {
+            padding: 0 18px 3px;
+            border: 1px solid #dbe2e8;
+            border-radius: 22px;
+            background-color: #fff;
+            color: #606975;
+            font-family: "Maven Pro", Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        .form-group label {
+            margin-bottom: 8px;
+            padding-left: 18px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+
+        .form-text {
+            padding-left: 18px;
+        }
+
+        .text-muted {
+            color: #9da9b9 !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card  mb-3">
+        <div class="wrapper bg-white ">
+            {% if message != "" %}
+            <div class="alert alert-danger" role="alert">
+                {{message}}
+            </div>
+            {% endif %}
+            <div class="row justify-content-center ">
+                <div class="col-lg-8 col-md-10">
+                    <h2>Mot de passe oublié?</h2>
+                    <p>Changez votre mot de passe en trois étapes faciles. Cela permet de garder votre nouveau mot de
+                        passe sécurisé.</p>
+                    <ol class="list-unstyled">
+                        <li><span class="text-primary text-medium">1. </span>Remplissez votre adresse e-mail ci-dessous.
+                        </li>
+                        <li><span class="text-primary text-medium">2. </span>Nous vous enverrons un code temporaire par
+                            e-mail.</li>
+                        <li><span class="text-primary text-medium">3. </span>Utilisez le code pour changer votre mot de
+                            passe sur notre site Web sécurisé.</li>
+                    </ol>
+                    <form class="card mt-4" novalidate method="POST">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Entrez votre adresse email</label>
+                                {% for field in form.visible_fields %}
+                                <div class="form-group">
+                                    {{ field }}
+                                </div>
+                                {% endfor %}
+                                <div class=" text-danger">{{ ch }}</div><br>
+                                <small class="form-text text-muted">Saisissez l'adresse e-mail que vous avez utilisée
+                                    lors de votre inscription. Ensuite, nous vous enverrons un code par
+                                    e-mail à cette adresse.</small>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-success" type="submit">Obtenir un nouveau mot de passe</button>
+                            <a type="button" class="btn btn-danger" href="{% url 'login' %}"><span>retour à la page de
+                                    connexion</span></a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
